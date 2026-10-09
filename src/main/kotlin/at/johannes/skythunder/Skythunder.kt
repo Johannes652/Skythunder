@@ -1,20 +1,20 @@
 package at.johannes.skythunder
 
-import net.fabricmc.api.ModInitializer
+import net.fabricmc.api.ClientModInitializer
 import net.minecraft.resources.Identifier
 import org.slf4j.LoggerFactory
 
-object Skythunder : ModInitializer {
+import at.johannes.skythunder.features.fishing.PlayCatchSound
+
+object Skythunder : ClientModInitializer {
 	const val MOD_ID: String = "skythunder"
 
 	private val LOGGER = LoggerFactory.getLogger(MOD_ID)
 
-	override fun onInitialize() {
-		// This code runs as soon as Minecraft is in a mod-load-ready state.
-		// However, some things (like resources) may still be uninitialized.
-		// Proceed with mild caution.
-
+	override fun onInitializeClient() {
 		LOGGER.info("Hello Fabric world!")
+
+		PlayCatchSound.init()
 	}
 
 	fun id(path: String): Identifier
