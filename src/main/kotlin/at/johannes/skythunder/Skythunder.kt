@@ -5,6 +5,7 @@ import net.minecraft.resources.Identifier
 import org.slf4j.LoggerFactory
 
 import at.johannes.skythunder.features.fishing.PlayCatchSound
+import at.johannes.skythunder.sound.CustomSounds
 
 object Skythunder : ClientModInitializer {
 	const val MOD_ID: String = "skythunder"
@@ -14,6 +15,7 @@ object Skythunder : ClientModInitializer {
 	override fun onInitializeClient() {
 		LOGGER.info("Hello Fabric world!")
 
+		CustomSounds.init()
 		PlayCatchSound.init()
 	}
 

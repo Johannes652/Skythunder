@@ -2,13 +2,15 @@ package at.johannes.skythunder.features.fishing
 
 import at.johannes.skythunder.Skythunder.MOD_ID
 import net.minecraft.client.Minecraft
-import net.minecraft.ChatFormatting
 import at.johannes.skythunder.events.ChatEvents
+import at.johannes.skythunder.sound.CustomSounds
+import at.johannes.skythunder.features.fishing.SeaCreature.*
+import net.minecraft.sounds.SoundEvent
 import org.slf4j.LoggerFactory
 
 object PlayCatchSound {
 
-    var client: Minecraft = Minecraft.getInstance()
+    var CLIENT: Minecraft = Minecraft.getInstance()
 
     var lastSeaCreature: SeaCreature? = null
     var queueSound: Boolean = false
@@ -21,13 +23,12 @@ object PlayCatchSound {
     }
 
     fun onChatMessage(message: String){
-        val msg: String? = ChatFormatting.stripFormatting(message)
+        LOGGER.info("Received chat message: $message")
 
-        LOGGER.info("Received chat message: $msg")
-        LOGGER.info(message)
+        queueSound = false;
 
         for (creature: SeaCreature in SeaCreature.entries) {
-            if (msg == creature.chatMessage) {
+            if (message == creature.chatMessage) {
                 lastSeaCreature = creature
                 queueSound = true
                 break
@@ -36,16 +37,30 @@ object PlayCatchSound {
 
         // Some error handling to prevent crashes if the player or level is null - is this necessary?
         if (lastSeaCreature == null ||
-            client.player == null ||
-            client.level == null) {
-            queueSound = false
+            CLIENT.player == null ||
+            CLIENT.level == null ||
+            !queueSound) {
             return
         }
 
-        if (queueSound) {
-            queueSound = false
-
-            LOGGER.info("Playing sound for ${lastSeaCreature!!.name} with rarity ${lastSeaCreature!!.rarity} and category ${lastSeaCreature!!.category}")
+        var soundEvent: SoundEvent? = null
+        when(lastSeaCreature) {
+            THUNDER -> {
+                soundEvent = CustomSounds.THUNDERSTRUCK_SHORT
+            }
+            LORD_JAWBUS -> {
+                soundEvent = CustomSounds.VINE_BOOM
+            }
+            RAGNAROK -> {
+                soundEvent = CustomSounds.YIPPE
+            }
+            else -> {
+                LOGGER.info("No sound registered for ${lastSeaCreature!!.name}")
+            }
+        }
+        if (soundEvent != null) {
+            LOGGER.info("Playing sound for ${lastSeaCreature!!.name}")
+            CLIENT.player!!.playSound(soundEvent, 1.0f, 1.0f)
         }
     }
 }

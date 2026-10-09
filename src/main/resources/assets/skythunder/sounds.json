@@ -1,0 +1,17 @@
+{
+  "vine_boom": {
+    "sounds": [
+      "skythunder:vine_boom"
+    ]
+  },
+  "thunderstruck_short": {
+    "sounds": [
+      "skythunder:thunderstruck_short"
+    ]
+  },
+  "yippe": {
+    "sounds": [
+      "skythunder:yippe"
+    ]
+  }
+}
