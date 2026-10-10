@@ -1,6 +1,5 @@
 package at.johannes.skythunder.features.fishing
 
-import at.johannes.skythunder.Skythunder.MOD_ID
 import net.minecraft.client.Minecraft
 import at.johannes.skythunder.events.ChatEvents
 import at.johannes.skythunder.sound.CustomSounds
@@ -8,6 +7,8 @@ import at.johannes.skythunder.features.fishing.SeaCreature.*
 import net.minecraft.sounds.SoundEvent
 import at.johannes.skythunder.util.SkythunderLogger
 import at.johannes.skythunder.config.SkythunderConfigManager
+import net.minecraft.core.registries.BuiltInRegistries
+import net.minecraft.resources.Identifier
 
 object PlayCatchSound {
 
@@ -17,11 +18,19 @@ object PlayCatchSound {
     var queueSound: Boolean = false
     var soundVolume: Float = 1.0f
 
-    val doulbeHookPrefix: String = "DOUBLE HOOK! "
+    const val DOUBLE_HOOK_PREFIX: String = "DOUBLE HOOK! "
 
     fun init() {
         ChatEvents.receiveString.register(::onChatMessage)
         SkythunderLogger.info("PlayCatchSound initialized.")
+    }
+
+    fun getSoundForSeaCreature(creature: SeaCreature): SoundEvent? {
+        val soundIdString = SkythunderConfigManager.getConfig().fishing.catchSounds[creature] ?: return null
+        val identifier = Identifier.tryParse(soundIdString) ?: return null
+
+        // Fetch the SoundEvent from the registry using the identifier. If it doesn't exist, return null.
+        return BuiltInRegistries.SOUND_EVENT.getOptional(identifier).orElse(null)
     }
 
     fun onChatMessage(message: String){
@@ -34,7 +43,7 @@ object PlayCatchSound {
 
         queueSound = false;
 
-        val catchMessage: String = message.replaceFirst(doulbeHookPrefix, "")
+        val catchMessage: String = message.replaceFirst(DOUBLE_HOOK_PREFIX, "")
 
         for (creature: SeaCreature in SeaCreature.entries) {
             if (catchMessage == creature.chatMessage) {
@@ -52,22 +61,10 @@ object PlayCatchSound {
             return
         }
 
-        var soundEvent: SoundEvent? = null
-        when(lastSeaCreature) {
-            THUNDER -> {
-                soundEvent = CustomSounds.THUNDERSTRUCK_SHORT
-            }
-            LORD_JAWBUS -> {
-                soundEvent = CustomSounds.VINE_BOOM
-            }
-            RAGNAROK -> {
-                soundEvent = CustomSounds.YIPPE
-            }
-            else -> {
-                SkythunderLogger.debug("No sound registered for ${lastSeaCreature!!.name}")
-            }
-        }
-        if (soundEvent != null) {
+        val soundEvent: SoundEvent? = getSoundForSeaCreature(lastSeaCreature!!)
+        if (soundEvent == null) {
+            SkythunderLogger.debug("No sound registered for ${lastSeaCreature!!.name}")
+        } else {
             SkythunderLogger.debug("Playing sound for ${lastSeaCreature!!.name}")
             CLIENT.player!!.playSound(soundEvent, soundVolume, 1.0f)
         }
