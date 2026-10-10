@@ -2,21 +2,23 @@ package at.johannes.skythunder
 
 import net.fabricmc.api.ClientModInitializer
 import net.minecraft.resources.Identifier
-import org.slf4j.LoggerFactory
+import at.johannes.skythunder.util.SkythunderLogger
 
 import at.johannes.skythunder.features.fishing.PlayCatchSound
 import at.johannes.skythunder.sound.CustomSounds
+import at.johannes.skythunder.config.SkythunderConfigManager
 
 object Skythunder : ClientModInitializer {
 	const val MOD_ID: String = "skythunder"
 
-	private val LOGGER = LoggerFactory.getLogger(MOD_ID)
-
 	override fun onInitializeClient() {
-		LOGGER.info("Hello Fabric world!")
+		SkythunderLogger.info("Initializing Skythunder mod...")
 
+		SkythunderConfigManager.init()
 		CustomSounds.init()
 		PlayCatchSound.init()
+
+		SkythunderLogger.info("Skythunder mod initialized.")
 	}
 
 	fun id(path: String): Identifier

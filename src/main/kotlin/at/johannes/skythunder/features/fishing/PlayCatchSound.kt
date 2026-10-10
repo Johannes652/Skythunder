@@ -6,7 +6,8 @@ import at.johannes.skythunder.events.ChatEvents
 import at.johannes.skythunder.sound.CustomSounds
 import at.johannes.skythunder.features.fishing.SeaCreature.*
 import net.minecraft.sounds.SoundEvent
-import org.slf4j.LoggerFactory
+import at.johannes.skythunder.util.SkythunderLogger
+import at.johannes.skythunder.config.SkythunderConfigManager
 
 object PlayCatchSound {
 
@@ -14,21 +15,29 @@ object PlayCatchSound {
 
     var lastSeaCreature: SeaCreature? = null
     var queueSound: Boolean = false
+    var soundVolume: Float = 1.0f
 
-    private val LOGGER = LoggerFactory.getLogger(MOD_ID)
+    val doulbeHookPrefix: String = "DOUBLE HOOK! "
 
     fun init() {
         ChatEvents.receiveString.register(::onChatMessage)
-        LOGGER.info("PlayCatchSound initialized.")
+        SkythunderLogger.info("PlayCatchSound initialized.")
     }
 
     fun onChatMessage(message: String){
-        LOGGER.info("Received chat message: $message")
+        if (!SkythunderConfigManager.getConfig().fishing.playCatchSounds) {
+            return
+        }
+        soundVolume = SkythunderConfigManager.getConfig().fishing.catchSoundVolume
+
+        SkythunderLogger.debug("Received chat message: $message")
 
         queueSound = false;
 
+        val catchMessage: String = message.replaceFirst(doulbeHookPrefix, "")
+
         for (creature: SeaCreature in SeaCreature.entries) {
-            if (message == creature.chatMessage) {
+            if (catchMessage == creature.chatMessage) {
                 lastSeaCreature = creature
                 queueSound = true
                 break
@@ -55,12 +64,12 @@ object PlayCatchSound {
                 soundEvent = CustomSounds.YIPPE
             }
             else -> {
-                LOGGER.info("No sound registered for ${lastSeaCreature!!.name}")
+                SkythunderLogger.debug("No sound registered for ${lastSeaCreature!!.name}")
             }
         }
         if (soundEvent != null) {
-            LOGGER.info("Playing sound for ${lastSeaCreature!!.name}")
-            CLIENT.player!!.playSound(soundEvent, 1.0f, 1.0f)
+            SkythunderLogger.debug("Playing sound for ${lastSeaCreature!!.name}")
+            CLIENT.player!!.playSound(soundEvent, soundVolume, 1.0f)
         }
     }
 }

@@ -5,14 +5,12 @@ import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.Registry
 import net.minecraft.sounds.SoundEvent
 import net.minecraft.resources.Identifier
-import org.slf4j.LoggerFactory
+import at.johannes.skythunder.util.SkythunderLogger
 
 object CustomSounds {
 
-    private val LOGGER = LoggerFactory.getLogger(MOD_ID)
-
     fun init() {
-        LOGGER.info("Registering custom sounds...")
+        SkythunderLogger.info("CustomSounds initialized.")
     }
 
     // Register sounds here
