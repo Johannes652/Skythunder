@@ -9,25 +9,25 @@ object SkythunderLogger {
     private val delegate: Logger = LoggerFactory.getLogger(MOD_ID)
 
     fun info(msg: String) {
-        delegate.info(msg)
+        delegate.info("[SKYTHUNDER] [INFO] $msg")
     }
 
     fun debug(msg: String) {
         if (!SkythunderConfigManager.getConfig().general.debugLogs) {
             return
         }
-        delegate.info("[DEBUG] $msg")
+        delegate.info("[SKYTHUNDER] [DEBUG] $msg")
     }
 
     fun warn(msg: String) {
-        delegate.warn(msg)
+        delegate.warn("[SKYTHUNDER] [WARN] $msg")
     }
 
     fun error(msg: String, throwable: Throwable? = null) {
         if (throwable == null) {
-            delegate.error(msg)
+            delegate.error("[SKYTHUNDER] [ERROR] $msg")
         } else {
-            delegate.error(msg, throwable)
+            delegate.error("[SKYTHUNDER] [ERROR] $msg", throwable)
         }
     }
 }
