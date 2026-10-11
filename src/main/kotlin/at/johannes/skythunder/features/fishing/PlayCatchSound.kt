@@ -18,8 +18,6 @@ object PlayCatchSound {
     var queueSound: Boolean = false
     var soundVolume: Float = 1.0f
 
-    const val DOUBLE_HOOK_PREFIX: String = "DOUBLE HOOK! "
-
     fun init() {
         ClientReceiveMessageEvents.GAME.register { message: Component, overlay: Boolean ->
             onChatMessage(message.string)
@@ -40,15 +38,10 @@ object PlayCatchSound {
             return
         }
         soundVolume = SkythunderConfigManager.getConfig().fishing.catchSoundVolume
-
-        SkythunderLogger.debug("Received chat message: $message")
-
         queueSound = false;
 
-        val catchMessage: String = message.replaceFirst(DOUBLE_HOOK_PREFIX, "")
-
         for (creature: SeaCreature in SeaCreature.entries) {
-            if (catchMessage == creature.chatMessage) {
+            if (message == creature.chatMessage) {
                 lastSeaCreature = creature
                 queueSound = true
                 break
