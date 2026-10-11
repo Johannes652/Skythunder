@@ -30,7 +30,11 @@ object SkythunderConfigManager {
         SkythunderLogger.info("Skythunder config initialized.")
     }
 
-    fun save() {
+    fun getConfig(): SkythunderConfig {
+        return CONFIG
+    }
+
+    private fun save() {
         try {
             Files.createDirectories(PATH.parent)
             Files.writeString(PATH, GSON.toJson(CONFIG))
@@ -39,7 +43,7 @@ object SkythunderConfigManager {
         }
     }
 
-    fun update() {
+    private fun update() {
         // Check if a config from class SkythunderConfig is missing in json file on PATH,
         // if so, add config to file without overwriting previous from default values.
         val currentConfig = GSON.toJson(CONFIG)
@@ -47,9 +51,5 @@ object SkythunderConfigManager {
         if (currentConfig != existingConfig) {
             save()
         }
-    }
-
-    fun getConfig(): SkythunderConfig {
-        return CONFIG
     }
 }

@@ -25,7 +25,7 @@ object PlayCatchSound {
         SkythunderLogger.info("PlayCatchSound initialized.")
     }
 
-    fun getSoundForSeaCreature(creature: SeaCreature): SoundEvent? {
+    private fun getSoundForSeaCreature(creature: SeaCreature): SoundEvent? {
         val soundIdString = SkythunderConfigManager.getConfig().fishing.catchSounds[creature] ?: return null
         val identifier = Identifier.tryParse(soundIdString) ?: return null
 
@@ -33,12 +33,13 @@ object PlayCatchSound {
         return BuiltInRegistries.SOUND_EVENT.getOptional(identifier).orElse(null)
     }
 
-    fun onChatMessage(message: String){
+    private fun onChatMessage(message: String){
         if (!SkythunderConfigManager.getConfig().fishing.playCatchSounds) {
             return
         }
         soundVolume = SkythunderConfigManager.getConfig().fishing.catchSoundVolume
         queueSound = false;
+        lastSeaCreature = null;
 
         for (creature: SeaCreature in SeaCreature.entries) {
             if (message == creature.chatMessage) {
