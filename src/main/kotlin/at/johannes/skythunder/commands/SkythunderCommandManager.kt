@@ -17,19 +17,21 @@ object SkythunderCommandManager {
 
     private fun register() {
         ClientCommandRegistrationCallback.EVENT.register { dispatcher, _ ->
-            val root = literal("skythunder").executes {
-                SkythunderCommands.openGui()
-                Command.SINGLE_SUCCESS
+            for (root in SkythunderCommands.rootCommandAliases) {
+                val rootCommand = literal(root).executes {
+                    SkythunderCommands.openGui()
+                    Command.SINGLE_SUCCESS
+                }
+                for (sub in SkythunderCommands.subCommands) {
+                    rootCommand.then(
+                        literal(sub.name).executes { context ->
+                            sub.run(context.source)
+                            Command.SINGLE_SUCCESS
+                        }
+                    )
+                }
+                dispatcher.register(rootCommand)
             }
-            for (sub in SkythunderCommands.subCommands) {
-                root.then(
-                    literal(sub.name).executes { context ->
-                        sub.run(context.source)
-                        Command.SINGLE_SUCCESS
-                    }
-                )
-            }
-            dispatcher.register(root)
         }
     }
 }

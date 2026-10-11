@@ -8,6 +8,11 @@ import net.minecraft.network.chat.Component
 object SkythunderCommands {
     const val prefix: String = "§b[Skythunder]§r "
 
+    val rootCommandAliases: List<String> = listOf(
+        "skythunder",
+        "st"
+    )
+
     val subCommands: List<SubCommand> = listOf(
         SubCommand("reloadconfig") { source ->
             if (SkythunderConfigManager.reload()) {
