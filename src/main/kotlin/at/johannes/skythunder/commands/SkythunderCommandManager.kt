@@ -1,11 +1,8 @@
 package at.johannes.skythunder.commands
 
-import at.johannes.skythunder.config.SkythunderConfigManager
-import at.johannes.skythunder.commands.SkythunderCommands
 import com.mojang.brigadier.Command
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback
 import net.fabricmc.fabric.api.client.command.v2.ClientCommands.literal
-import net.minecraft.client.Minecraft
 import at.johannes.skythunder.util.SkythunderLogger
 
 object SkythunderCommandManager {
