@@ -32,8 +32,9 @@ dependencies {
 
 tasks.shadowJar {
 	configurations = listOf(shadowImpl)
+	mergeServiceFiles()
 	relocate("io.github.notenoughupdates.moulconfig", "at.johannes.skythunder.deps.moulconfig")
-	archiveClassifier.set("")   // make the shadowed jar the one you ship
+	archiveClassifier.set("")
 }
 tasks.jar { archiveClassifier.set("slim") }
 
