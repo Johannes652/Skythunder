@@ -3,7 +3,6 @@ package at.johannes.skythunder
 import net.fabricmc.api.ClientModInitializer
 import net.minecraft.resources.Identifier
 import at.johannes.skythunder.util.SkythunderLogger
-
 import at.johannes.skythunder.features.fishing.PlayCatchSound
 import at.johannes.skythunder.sound.CustomSounds
 import at.johannes.skythunder.config.SkythunderConfigManager

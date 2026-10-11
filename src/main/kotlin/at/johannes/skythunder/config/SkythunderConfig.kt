@@ -1,6 +1,6 @@
 package at.johannes.skythunder.config
 
-import at.johannes.skythunder.features.fishing.SeaCreature
+import at.johannes.skythunder.skyblock.SeaCreature
 
 class SkythunderConfig {
     var general: General = General()

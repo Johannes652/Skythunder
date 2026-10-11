@@ -4,6 +4,7 @@ import net.minecraft.client.Minecraft
 import net.minecraft.sounds.SoundEvent
 import at.johannes.skythunder.util.SkythunderLogger
 import at.johannes.skythunder.config.SkythunderConfigManager
+import at.johannes.skythunder.skyblock.SeaCreature
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.Identifier
 import net.fabricmc.fabric.api.client.message.v1.ClientReceiveMessageEvents

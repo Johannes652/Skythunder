@@ -1,7 +1,4 @@
-package at.johannes.skythunder.features.fishing
-
-import at.johannes.skythunder.skyblock.Rarity
-import at.johannes.skythunder.skyblock.SeaCreatureCategory
+package at.johannes.skythunder.skyblock
 
 enum class SeaCreature(val creatureName: String, val chatMessage: String, val rarity: Rarity, val category: SeaCreatureCategory) {
 

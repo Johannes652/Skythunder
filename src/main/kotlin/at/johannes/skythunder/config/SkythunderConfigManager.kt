@@ -1,7 +1,5 @@
 package at.johannes.skythunder.config
 
-import at.johannes.skythunder.Skythunder
-import at.johannes.skythunder.Skythunder.MOD_ID
 import at.johannes.skythunder.util.SkythunderLogger
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
