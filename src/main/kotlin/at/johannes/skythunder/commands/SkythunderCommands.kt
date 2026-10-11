@@ -6,6 +6,9 @@ import net.minecraft.client.Minecraft
 import net.minecraft.network.chat.Component
 
 object SkythunderCommands {
+
+    class SubCommand (val name: String, val run: (FabricClientCommandSource) -> Unit)
+
     const val prefix: String = "§b[Skythunder]§r "
 
     val rootCommandAliases: List<String> = listOf(
@@ -27,5 +30,3 @@ object SkythunderCommands {
         Minecraft.getInstance().schedule { SkythunderConfigManager.openGui() }
     }
 }
-
-class SubCommand (val name: String, val run: (FabricClientCommandSource) -> Unit)
