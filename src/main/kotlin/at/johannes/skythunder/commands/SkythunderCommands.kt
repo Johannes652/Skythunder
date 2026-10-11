@@ -1,9 +1,10 @@
 package at.johannes.skythunder.commands
 
+import at.johannes.skythunder.config.SkythunderConfigManager
 import com.mojang.brigadier.Command
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback
 import net.fabricmc.fabric.api.client.command.v2.ClientCommands.literal
-import net.minecraft.network.chat.Component
+import net.minecraft.client.Minecraft
 import at.johannes.skythunder.util.SkythunderLogger
 
 object SkythunderCommands {
@@ -18,7 +19,7 @@ object SkythunderCommands {
             dispatcher.register(
                 literal("skythunder")
                     .executes { context ->
-                        context.source.sendFeedback(Component.literal("§b[Skythunder]§r Command executed!"))
+                        Minecraft.getInstance().schedule { SkythunderConfigManager.openGui() }
                         Command.SINGLE_SUCCESS
                     }
             )
