@@ -8,6 +8,8 @@ plugins {
 	id("com.gradleup.shadow") version "9.6.1"
 }
 
+
+
 repositories {
 	maven("https://maven.notenoughupdates.org/releases/")
 }
