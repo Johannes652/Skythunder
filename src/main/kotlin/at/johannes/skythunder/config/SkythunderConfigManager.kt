@@ -19,7 +19,6 @@ object SkythunderConfigManager {
         }
 
         // Create the file on first run, and add any new fields to an existing one
-        // (this replaces your old update() logic).
         managed.saveToFile()
 
         // Safety net: persist if the game closes without the GUI being closed first.
