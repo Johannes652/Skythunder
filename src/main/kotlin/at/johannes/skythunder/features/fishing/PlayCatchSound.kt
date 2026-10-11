@@ -1,14 +1,13 @@
 package at.johannes.skythunder.features.fishing
 
 import net.minecraft.client.Minecraft
-import at.johannes.skythunder.events.ChatEvents
-import at.johannes.skythunder.sound.CustomSounds
-import at.johannes.skythunder.features.fishing.SeaCreature.*
 import net.minecraft.sounds.SoundEvent
 import at.johannes.skythunder.util.SkythunderLogger
 import at.johannes.skythunder.config.SkythunderConfigManager
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.Identifier
+import net.fabricmc.fabric.api.client.message.v1.ClientReceiveMessageEvents
+import net.minecraft.network.chat.Component
 
 object PlayCatchSound {
 
@@ -21,7 +20,9 @@ object PlayCatchSound {
     const val DOUBLE_HOOK_PREFIX: String = "DOUBLE HOOK! "
 
     fun init() {
-        ChatEvents.receiveString.register(::onChatMessage)
+        ClientReceiveMessageEvents.GAME.register { message: Component, overlay: Boolean ->
+            onChatMessage(message.string)
+        }
         SkythunderLogger.info("PlayCatchSound initialized.")
     }
 

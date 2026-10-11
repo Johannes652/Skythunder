@@ -8,7 +8,6 @@ import at.johannes.skythunder.features.fishing.PlayCatchSound
 import at.johannes.skythunder.sound.CustomSounds
 import at.johannes.skythunder.config.SkythunderConfigManager
 import at.johannes.skythunder.commands.SkythunderCommands
-import at.johannes.skythunder.listeners.GameMessageListener
 
 object Skythunder : ClientModInitializer {
 	const val MOD_ID: String = "skythunder"
@@ -16,7 +15,6 @@ object Skythunder : ClientModInitializer {
 	override fun onInitializeClient() {
 		SkythunderLogger.info("Initializing Skythunder mod...")
 
-		GameMessageListener.init()
 		SkythunderConfigManager.init()
 		CustomSounds.init()
 		PlayCatchSound.init()
