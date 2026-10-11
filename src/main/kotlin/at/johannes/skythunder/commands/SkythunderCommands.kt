@@ -13,7 +13,7 @@ object SkythunderCommands {
         SkythunderLogger.info("SkythunderCommands initialized.")
     }
 
-    fun register() {
+    private fun register() {
         ClientCommandRegistrationCallback.EVENT.register { dispatcher, _ ->
             dispatcher.register(
                 literal("skythunder")
