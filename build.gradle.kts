@@ -4,14 +4,18 @@ plugins {
 	id("net.fabricmc.fabric-loom")
 	`maven-publish`
 	id("org.jetbrains.kotlin.jvm") version "2.4.21"
+
+	id("com.gradleup.shadow") version "9.6.1"
 }
 
+
+
 repositories {
-	// Add repositories to retrieve artifacts from in here.
-	// You should only use this when depending on other mods because
-	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
-	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
-	// for more information about repositories.
+	maven("https://maven.notenoughupdates.org/releases/")
+}
+
+val shadowImpl: Configuration by configurations.creating {
+	configurations.implementation.get().extendsFrom(this)
 }
 
 dependencies {
@@ -22,7 +26,19 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	implementation("net.fabricmc.fabric-api:fabric-api:${providers.gradleProperty("fabric_api_version").get()}")
     implementation("net.fabricmc:fabric-language-kotlin:${providers.gradleProperty("fabric_kotlin_version").get()}")
+
+	shadowImpl("org.notenoughupdates.moulconfig:modern-26.1:4.7.2")
 }
+
+tasks.shadowJar {
+	configurations = listOf(shadowImpl)
+	mergeServiceFiles()
+	relocate("io.github.notenoughupdates.moulconfig", "at.johannes.skythunder.deps.moulconfig")
+	archiveClassifier.set("")
+}
+tasks.jar { archiveClassifier.set("slim") }
+
+loom { accessWidenerPath = file("src/main/resources/skythunder.classtweaker") }
 
 tasks.processResources {
 	val version = version
