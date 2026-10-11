@@ -8,6 +8,7 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents
 
 object SkythunderConfigManager {
     private lateinit var managed: ManagedConfig<SkythunderConfig>
+    private var loadError: Exception? = null
 
     fun init() {
         val file = FabricLoader.getInstance().configDir.resolve("skythunder.json").toFile()
@@ -25,6 +26,12 @@ object SkythunderConfigManager {
         ClientLifecycleEvents.CLIENT_STOPPING.register { managed.saveToFile() }
 
         SkythunderLogger.info("Skythunder config initialized.")
+    }
+
+    fun reload(): Boolean {
+        loadError = null
+        managed.reloadFromFile()
+        return loadError == null
     }
 
     // Always call this rather than caching the result: the instance is replaced on reload.
