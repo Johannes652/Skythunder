@@ -23,6 +23,9 @@ object SkythunderCommands {
             } else {
                 source.sendError(Component.literal("$PREFIX Could not read config file, keeping current settings. Check the log."))
             }
+        },
+        SubCommand("config") { _ ->
+            openGui()
         }
     )
 
