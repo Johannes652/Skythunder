@@ -9,7 +9,7 @@ object SkythunderCommands {
 
     class SubCommand (val name: String, val run: (FabricClientCommandSource) -> Unit)
 
-    const val prefix: String = "§b[Skythunder]§r "
+    private const val PREFIX: String = "§b[Skythunder]§r "
 
     val rootCommandAliases: List<String> = listOf(
         "skythunder",
@@ -19,9 +19,9 @@ object SkythunderCommands {
     val subCommands: List<SubCommand> = listOf(
         SubCommand("reloadconfig") { source ->
             if (SkythunderConfigManager.reload()) {
-                source.sendFeedback(Component.literal("$prefix Config reloaded successfully."))
+                source.sendFeedback(Component.literal("$PREFIX Config reloaded successfully."))
             } else {
-                source.sendError(Component.literal("$prefix Could not read config file, keeping current settings. Check the log."))
+                source.sendError(Component.literal("$PREFIX Could not read config file, keeping current settings. Check the log."))
             }
         }
     )
