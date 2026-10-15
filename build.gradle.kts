@@ -12,6 +12,7 @@ plugins {
 
 repositories {
 	maven("https://maven.notenoughupdates.org/releases/")
+	maven("https://maven.terraformersmc.com/")
 }
 
 val shadowImpl: Configuration by configurations.creating {
@@ -27,7 +28,11 @@ dependencies {
 	implementation("net.fabricmc.fabric-api:fabric-api:${providers.gradleProperty("fabric_api_version").get()}")
     implementation("net.fabricmc:fabric-language-kotlin:${providers.gradleProperty("fabric_kotlin_version").get()}")
 
+	// Moulconfig
 	shadowImpl("org.notenoughupdates.moulconfig:modern-26.1:4.7.2")
+
+	// ModMenu
+	implementation("com.terraformersmc:modmenu:${providers.gradleProperty("modmenu_version").get()}")
 }
 
 tasks.shadowJar {

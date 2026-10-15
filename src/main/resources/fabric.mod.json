@@ -20,6 +20,11 @@
 				"value": "at.johannes.skythunder.Skythunder",
 				"adapter": "kotlin"
 			}
+		],
+		"modmenu": [
+			{
+				"value": "at.johannes.skythunder.compat.SkythunderModMenuImpl", "adapter": "kotlin"
+			}
 		]
 	},
 	"mixins": [
@@ -32,5 +37,8 @@
 		"fabric-api": "*",
 		"fabric-language-kotlin": "*"
 	},
-	"accessWidener": "skythunder.classtweaker"
+	"accessWidener": "skythunder.classtweaker",
+	"suggests": {
+		"modmenu": "*"
+	}
 }
