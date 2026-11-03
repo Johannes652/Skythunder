@@ -8,6 +8,7 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents
 
 object SkythunderConfigManager {
     private lateinit var managed: ManagedConfig<SkythunderConfig>
+    private var loadError: Exception? = null
 
     fun init() {
         val file = FabricLoader.getInstance().configDir.resolve("skythunder.json").toFile()
@@ -18,13 +19,18 @@ object SkythunderConfigManager {
         }
 
         // Create the file on first run, and add any new fields to an existing one
-        // (this replaces your old update() logic).
         managed.saveToFile()
 
         // Safety net: persist if the game closes without the GUI being closed first.
         ClientLifecycleEvents.CLIENT_STOPPING.register { managed.saveToFile() }
 
         SkythunderLogger.info("Skythunder config initialized.")
+    }
+
+    fun reload(): Boolean {
+        loadError = null
+        managed.reloadFromFile()
+        return loadError == null
     }
 
     // Always call this rather than caching the result: the instance is replaced on reload.
