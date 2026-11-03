@@ -29,7 +29,7 @@ dependencies {
     implementation("net.fabricmc:fabric-language-kotlin:${providers.gradleProperty("fabric_kotlin_version").get()}")
 
 	// Moulconfig
-	shadowImpl("org.notenoughupdates.moulconfig:modern-26.1:4.7.2")
+	shadowImpl("org.notenoughupdates.moulconfig:modern-26.2:4.8.0")
 
 	// ModMenu
 	implementation("com.terraformersmc:modmenu:${providers.gradleProperty("modmenu_version").get()}")
